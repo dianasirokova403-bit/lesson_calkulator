@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Семейный бюджет — планируйте доходы и расходы вместе</title>
+  <meta name="description" content="Бесплатный калькулятор семейного бюджета: счета, цели, лимиты, отчёты. Данные хранятся в вашем браузере." />
+  <meta name="theme-color" content="#2563eb" />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --bg-soft: #edf3fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d8e1ee;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      --radius: 18px;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: #1f2937;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #22c55e;
+      --shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(160deg, var(--bg-soft) 0%, var(--bg) 55%, #e8eef8 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body.dark {
+      background: linear-gradient(160deg, var(--bg-soft) 0%, var(--bg) 55%, #0c1222 100%);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 32px 0 40px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      margin-bottom: 20px;
+      background: var(--card);
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p.lead {
+      margin: 0 auto 28px;
+      max-width: 560px;
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 14px 26px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s ease, transform 0.15s ease;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      padding: 14px 22px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .feature h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .feature p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .note {
+      margin-top: 40px;
+      padding: 18px 20px;
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+      background: rgba(37, 99, 235, 0.06);
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    body.dark .note {
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    .note strong {
+      color: var(--text);
+    }
+
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <button type="button" class="btn-ghost" id="themeToggle" aria-label="Сменить тему">Тёмная тема</button>
+    </div>
+
+    <header class="hero">
+      <div class="hero-badge">Без регистрации · работает в браузере</div>
+      <h1>Добро пожаловать в калькулятор семейного бюджета</h1>
+      <p class="lead">
+        Ведите доходы и расходы по счетам, следите за лимитами категорий, целями и долгами.
+        Удобная сводка за месяц и отчёты — чтобы принимать решения спокойно и вместе.
+      </p>
+      <div class="cta-row">
+        <a class="btn-primary" href="app.html">Открыть приложение →</a>
+        <a class="btn-outline" href="app.html#dashboard">Сразу к дашборду</a>
+      </div>
+    </header>
+
+    <section class="features" aria-label="Возможности">
+      <article class="feature">
+        <div class="feature-icon" aria-hidden="true">📊</div>
+        <h2>Дашборд и операции</h2>
+        <p>Месячная сводка, доходы, расходы, остаток и резерв. Добавляйте и редактируйте операции без лишних шагов.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon" aria-hidden="true">🏦</div>
+        <h2>Счета и переводы</h2>
+        <p>Несколько счетов, переводы между ними — картина ликвидности всегда перед глазами.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon" aria-hidden="true">🎯</div>
+        <h2>Цели, долги, календарь</h2>
+        <p>Планируйте крупные покупки, отслеживайте займы и смотрите активность по датам.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon" aria-hidden="true">📤</div>
+        <h2>Экспорт и резервные копии</h2>
+        <p>CSV и JSON для таблиц и бэкапов. Импортируйте данные обратно при смене устройства.</p>
+      </article>
+    </section>
+
+    <p class="note">
+      <strong>Конфиденальность:</strong> все данные хранятся только в localStorage вашего браузера.
+      Регулярно делайте экспорт JSON, чтобы не потерять историю при очистке кэша.
+    </p>
+
+    <footer>
+      <p>Откройте <a href="app.html">приложение</a> и начните с вкладки «Операции» или «Настройки».</p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var key = 'landingTheme';
+      function apply(dark) {
+        document.body.classList.toggle('dark', dark);
+        var btn = document.getElementById('themeToggle');
+        if (btn) btn.textContent = dark ? 'Светлая тема' : 'Тёмная тема';
+      }
+      try {
+        apply(localStorage.getItem(key) === 'dark');
+      } catch (e) { /* ignore */ }
+
+      document.getElementById('themeToggle').addEventListener('click', function () {
+        var dark = !document.body.classList.contains('dark');
+        apply(dark);
+        try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) { /* ignore */ }
+      });
+    })();
+  </script>
+</body>
+</html>
