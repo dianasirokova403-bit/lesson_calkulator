@@ -58,6 +58,9 @@
     .topbar {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-bottom: 8px;
     }
 
@@ -231,71 +234,187 @@
 <body>
   <div class="wrap">
     <div class="topbar">
+      <button type="button" class="btn-ghost" id="langToggle" aria-label="Switch to English">English</button>
       <button type="button" class="btn-ghost" id="themeToggle" aria-label="Сменить тему">Тёмная тема</button>
     </div>
 
     <header class="hero">
-      <div class="hero-badge">Без регистрации · работает в браузере</div>
-      <h1>Добро пожаловать в калькулятор семейного бюджета</h1>
-      <p class="lead">
+      <div class="hero-badge" data-i18n="badge">Без регистрации · работает в браузере</div>
+      <h1 data-i18n="heroTitle">Добро пожаловать в калькулятор семейного бюджета</h1>
+      <p class="lead" data-i18n="lead">
         Ведите доходы и расходы по счетам, следите за лимитами категорий, целями и долгами.
         Удобная сводка за месяц и отчёты — чтобы принимать решения спокойно и вместе.
       </p>
       <div class="cta-row">
-        <a class="btn-primary" href="app.html">Открыть приложение →</a>
-        <a class="btn-outline" href="app.html#dashboard">Сразу к дашборду</a>
+        <a class="btn-primary" href="app.html" data-i18n="ctaPrimary">Открыть приложение →</a>
+        <a class="btn-outline" href="app.html#dashboard" data-i18n="ctaOutline">Сразу к дашборду</a>
       </div>
     </header>
 
-    <section class="features" aria-label="Возможности">
+    <section class="features" id="featuresSection" aria-label="Возможности">
       <article class="feature">
         <div class="feature-icon" aria-hidden="true">📊</div>
-        <h2>Дашборд и операции</h2>
-        <p>Месячная сводка, доходы, расходы, остаток и резерв. Добавляйте и редактируйте операции без лишних шагов.</p>
+        <h2 data-i18n="f1h">Дашборд и операции</h2>
+        <p data-i18n="f1p">Месячная сводка, доходы, расходы, остаток и резерв. Добавляйте и редактируйте операции без лишних шагов.</p>
       </article>
       <article class="feature">
         <div class="feature-icon" aria-hidden="true">🏦</div>
-        <h2>Счета и переводы</h2>
-        <p>Несколько счетов, переводы между ними — картина ликвидности всегда перед глазами.</p>
+        <h2 data-i18n="f2h">Счета и переводы</h2>
+        <p data-i18n="f2p">Несколько счетов, переводы между ними — картина ликвидности всегда перед глазами.</p>
       </article>
       <article class="feature">
         <div class="feature-icon" aria-hidden="true">🎯</div>
-        <h2>Цели, долги, календарь</h2>
-        <p>Планируйте крупные покупки, отслеживайте займы и смотрите активность по датам.</p>
+        <h2 data-i18n="f3h">Цели, долги, календарь</h2>
+        <p data-i18n="f3p">Планируйте крупные покупки, отслеживайте займы и смотрите активность по датам.</p>
       </article>
       <article class="feature">
         <div class="feature-icon" aria-hidden="true">📤</div>
-        <h2>Экспорт и резервные копии</h2>
-        <p>CSV и JSON для таблиц и бэкапов. Импортируйте данные обратно при смене устройства.</p>
+        <h2 data-i18n="f4h">Экспорт и резервные копии</h2>
+        <p data-i18n="f4p">CSV и JSON для таблиц и бэкапов. Импортируйте данные обратно при смене устройства.</p>
       </article>
     </section>
 
-    <p class="note">
-      <strong>Конфиденальность:</strong> все данные хранятся только в localStorage вашего браузера.
+    <p class="note" data-i18n="note" data-i18n-html="true">
+      <strong>Конфиденциальность:</strong> все данные хранятся только в localStorage вашего браузера.
       Регулярно делайте экспорт JSON, чтобы не потерять историю при очистке кэша.
     </p>
 
     <footer>
-      <p>Откройте <a href="app.html">приложение</a> и начните с вкладки «Операции» или «Настройки».</p>
+      <p>
+        <span data-i18n="footerBefore">Откройте </span><a href="app.html" data-i18n="footerLink">приложение</a><span data-i18n="footerAfter"> и начните с вкладки «Операции» или «Настройки».</span>
+      </p>
     </footer>
   </div>
 
   <script>
     (function () {
-      var key = 'landingTheme';
-      function apply(dark) {
-        document.body.classList.toggle('dark', dark);
+      var themeKey = 'landingTheme';
+      var langKey = 'landingLang';
+
+      var STR = {
+        ru: {
+          title: 'Семейный бюджет — планируйте доходы и расходы вместе',
+          metaDesc: 'Бесплатный калькулятор семейного бюджета: счета, цели, лимиты, отчёты. Данные хранятся в вашем браузере.',
+          themeAria: 'Сменить тему',
+          themeDark: 'Тёмная тема',
+          themeLight: 'Светлая тема',
+          langBtn: 'English',
+          langBtnAria: 'Switch to English',
+          badge: 'Без регистрации · работает в браузере',
+          heroTitle: 'Добро пожаловать в калькулятор семейного бюджета',
+          lead: 'Ведите доходы и расходы по счетам, следите за лимитами категорий, целями и долгами. Удобная сводка за месяц и отчёты — чтобы принимать решения спокойно и вместе.',
+          ctaPrimary: 'Открыть приложение →',
+          ctaOutline: 'Сразу к дашборду',
+          featuresAria: 'Возможности',
+          f1h: 'Дашборд и операции',
+          f1p: 'Месячная сводка, доходы, расходы, остаток и резерв. Добавляйте и редактируйте операции без лишних шагов.',
+          f2h: 'Счета и переводы',
+          f2p: 'Несколько счетов, переводы между ними — картина ликвидности всегда перед глазами.',
+          f3h: 'Цели, долги, календарь',
+          f3p: 'Планируйте крупные покупки, отслеживайте займы и смотрите активность по датам.',
+          f4h: 'Экспорт и резервные копии',
+          f4p: 'CSV и JSON для таблиц и бэкапов. Импортируйте данные обратно при смене устройства.',
+          note: '<strong>Конфиденциальность:</strong> все данные хранятся только в localStorage вашего браузера. Регулярно делайте экспорт JSON, чтобы не потерять историю при очистке кэша.',
+          footerBefore: 'Откройте ',
+          footerLink: 'приложение',
+          footerAfter: ' и начните с вкладки «Операции» или «Настройки».'
+        },
+        en: {
+          title: 'Family budget — plan income and expenses together',
+          metaDesc: 'Free family budget calculator: accounts, goals, category limits, reports. Your data stays in the browser.',
+          themeAria: 'Toggle theme',
+          themeDark: 'Dark theme',
+          themeLight: 'Light theme',
+          langBtn: 'Русский',
+          langBtnAria: 'Switch to Russian',
+          badge: 'No sign-up · runs in your browser',
+          heroTitle: 'Welcome to the family budget calculator',
+          lead: 'Track income and expenses across accounts, watch category limits, goals, and loans. A clear monthly overview and reports help you decide calmly—together.',
+          ctaPrimary: 'Open app →',
+          ctaOutline: 'Go to dashboard',
+          featuresAria: 'Features',
+          f1h: 'Dashboard and transactions',
+          f1p: 'Monthly summary, income, expenses, balance, and reserve. Add and edit entries without extra steps.',
+          f2h: 'Accounts and transfers',
+          f2p: 'Multiple accounts and transfers between them—your liquidity picture is always in view.',
+          f3h: 'Goals, debts, calendar',
+          f3p: 'Plan big purchases, track loans, and see activity by date.',
+          f4h: 'Export and backups',
+          f4p: 'CSV and JSON for spreadsheets and backups. Import again when you switch devices.',
+          note: '<strong>Privacy:</strong> all data is stored only in your browser’s localStorage. Export JSON regularly so you don’t lose history if the cache is cleared.',
+          footerBefore: 'Open the ',
+          footerLink: 'app',
+          footerAfter: ' and start with the Operations or Settings tab.'
+        }
+      };
+
+      var lang = 'ru';
+
+      function applyThemeLabels(dark) {
         var btn = document.getElementById('themeToggle');
-        if (btn) btn.textContent = dark ? 'Светлая тема' : 'Тёмная тема';
+        if (!btn) return;
+        btn.textContent = dark ? STR[lang].themeLight : STR[lang].themeDark;
+        btn.setAttribute('aria-label', STR[lang].themeAria);
       }
+
+      function applyTheme(dark) {
+        document.body.classList.toggle('dark', dark);
+        applyThemeLabels(dark);
+      }
+
+      function applyLang(next) {
+        lang = next === 'en' ? 'en' : 'ru';
+        document.documentElement.lang = lang;
+
+        document.title = STR[lang].title;
+        var meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute('content', STR[lang].metaDesc);
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (!key || !STR[lang][key]) return;
+          if (el.getAttribute('data-i18n-html') === 'true') {
+            el.innerHTML = STR[lang][key];
+          } else {
+            el.textContent = STR[lang][key];
+          }
+        });
+
+        var fs = document.getElementById('featuresSection');
+        if (fs) fs.setAttribute('aria-label', STR[lang].featuresAria);
+
+        var langBtn = document.getElementById('langToggle');
+        if (langBtn) {
+          langBtn.textContent = STR[lang].langBtn;
+          langBtn.setAttribute('aria-label', STR[lang].langBtnAria);
+        }
+
+        applyThemeLabels(document.body.classList.contains('dark'));
+
+        try {
+          localStorage.setItem(langKey, lang);
+        } catch (e) { /* ignore */ }
+      }
+
       try {
-        apply(localStorage.getItem(key) === 'dark');
+        var savedLang = localStorage.getItem(langKey);
+        if (savedLang === 'en' || savedLang === 'ru') applyLang(savedLang);
+      } catch (e) { /* ignore */ }
+
+      try {
+        applyTheme(localStorage.getItem(themeKey) === 'dark');
       } catch (e) { /* ignore */ }
 
       document.getElementById('themeToggle').addEventListener('click', function () {
         var dark = !document.body.classList.contains('dark');
-        apply(dark);
-        try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) { /* ignore */ }
+        applyTheme(dark);
+        try {
+          localStorage.setItem(themeKey, dark ? 'dark' : 'light');
+        } catch (e) { /* ignore */ }
+      });
+
+      document.getElementById('langToggle').addEventListener('click', function () {
+        applyLang(lang === 'ru' ? 'en' : 'ru');
       });
     })();
   </script>
